@@ -1,5 +1,6 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser,BaseUserManager
+
 
 # Create your models here.
 
@@ -18,3 +19,8 @@ class User(AbstractUser):
         if not self.pk:
             self.role = self.base_role
             return super().save(*args, **kwargs)
+        
+class StudentManager(BaseUserManager):
+    def get_queryset(self, *args, **kwargs):
+        results = super().get_queryset(*args, **kwargs)
+        return results.filter(role=User.Role.STUDENT)      
