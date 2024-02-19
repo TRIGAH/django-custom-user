@@ -24,3 +24,16 @@ class StudentManager(BaseUserManager):
     def get_queryset(self, *args, **kwargs):
         results = super().get_queryset(*args, **kwargs)
         return results.filter(role=User.Role.STUDENT)      
+    
+
+class Student(User):
+
+    base_role = User.Role.STUDENT
+
+    student = StudentManager()
+
+    class Meta:
+        proxy = True
+
+    def welcome(self):
+        return "Only for students"
