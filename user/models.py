@@ -70,3 +70,8 @@ class Teacher(User):
 class TeacherProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     teacher_id = models.IntegerField(null=True, blank=True)
+
+@receiver(post_save, sender=Teacher)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created and instance.role == "TEACHER":
+        TeacherProfile.objects.create(user=instance)    
