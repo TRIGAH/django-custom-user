@@ -24,8 +24,7 @@ class User(AbstractUser):
 class StudentManager(BaseUserManager):
     def get_queryset(self, *args, **kwargs):
         results = super().get_queryset(*args, **kwargs)
-        return results.filter(role=User.Role.STUDENT)      
-    
+        return results.filter(role=User.Role.STUDENT)       
 
 class Student(User):
 
@@ -39,14 +38,16 @@ class Student(User):
     def welcome(self):
         return "Only for students"
     
+class StudentProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    student_id = models.IntegerField(null=True, blank=True)
+
 @receiver(post_save, sender=Student)
 def create_user_profile(sender, instance, created, **kwargs):
     if created and instance.role == "STUDENT":
         StudentProfile.objects.create(user=instance)    
     
-class StudentProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    student_id = models.IntegerField(null=True, blank=True)
+
 
 
 class TeacherManager(BaseUserManager):
@@ -65,3 +66,7 @@ class Teacher(User):
 
     def welcome(self):
         return "Only for teachers"
+    
+class TeacherProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    teacher_id = models.IntegerField(null=True, blank=True)
