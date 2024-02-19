@@ -53,3 +53,15 @@ class TeacherManager(BaseUserManager):
     def get_queryset(self, *args, **kwargs):
         results = super().get_queryset(*args, **kwargs)
         return results.filter(role=User.Role.TEACHER)
+
+class Teacher(User):
+
+    base_role = User.Role.TEACHER
+
+    teacher = TeacherManager()
+
+    class Meta:
+        proxy = True
+
+    def welcome(self):
+        return "Only for teachers"
