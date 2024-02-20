@@ -5,5 +5,5 @@ django-admin startproject core .
 py manage.py startapp users
 py manage.py makemigrations --dry-run (optional --verbosity 1,2,3)
 pip install coverage
-coverage run --omit='*/venv/*' manage.py test
+coverage run --omit='*/core_env/*' manage.py test
 coverage html
