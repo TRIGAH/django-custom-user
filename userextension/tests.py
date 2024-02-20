@@ -18,3 +18,8 @@ class UserAccountTests(TestCase):
         with self.assertRaises(ValueError):
             db.objects.create_superuser(
                 email='testuser@super.com', user_name='username1', first_name='first_name', password='password', is_superuser=False)
+
+
+        with self.assertRaises(ValueError):
+            db.objects.create_superuser(
+                email='testuser@super.com', user_name='username1', first_name='first_name', password='password', is_staff=False)
