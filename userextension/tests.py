@@ -14,3 +14,7 @@ class UserAccountTests(TestCase):
         self.assertTrue(super_user.is_staff)
         self.assertTrue(super_user.is_active)
         self.assertEqual(str(super_user), "username")
+
+        with self.assertRaises(ValueError):
+            db.objects.create_superuser(
+                email='testuser@super.com', user_name='username1', first_name='first_name', password='password', is_superuser=False)
