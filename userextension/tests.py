@@ -40,3 +40,8 @@ class UserAccountTests(TestCase):
         self.assertFalse(user.is_superuser)
         self.assertFalse(user.is_staff)
         self.assertFalse(user.is_active)
+
+
+        with self.assertRaises(ValueError):
+            db.objects.create_user(
+                email='', user_name='a', first_name='first_name', password='password')
